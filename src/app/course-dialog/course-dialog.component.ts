@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { CourseModel } from "../model/course";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import moment from "moment";
-import { fromEvent } from "rxjs";
+import { from, fromEvent } from "rxjs";
 import {
   concatMap,
   distinctUntilChanged,
@@ -19,7 +19,6 @@ import {
   filter,
   mergeMap,
 } from "rxjs/operators";
-import { fromPromise } from "rxjs/internal-compatibility";
 
 @Component({
   selector: "course-dialog",
@@ -62,12 +61,22 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
   }
 
   saveCourse(changes) {
-    return fromPromise(
+    // return fromPromise(
+    //   fetch(`/api/courses/${this.course.id}`, {
+    //     method: "PUT",
+    //     body: JSON.stringify(changes),
+    //     headers: {
+    //       "content-type": "application/json",
+    //     },
+    //   })
+    // );
+
+    return from(
       fetch(`/api/courses/${this.course.id}`, {
         method: "PUT",
         body: JSON.stringify(changes),
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json",
         },
       })
     );

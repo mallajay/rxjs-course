@@ -7,20 +7,8 @@ import {
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { CourseModel } from "../model/course";
-import {
-  debounceTime,
-  distinctUntilChanged,
-  startWith,
-  tap,
-  delay,
-  map,
-  concatMap,
-  switchMap,
-  withLatestFrom,
-  concatAll,
-  shareReplay,
-} from "rxjs/operators";
-import { merge, fromEvent, Observable, concat } from "rxjs";
+import { map, tap } from "rxjs/operators";
+import { forkJoin, fromEvent, Observable } from "rxjs";
 import { LessonModel } from "../model/lesson";
 import { createHttpObservable } from "../common/util";
 
@@ -43,23 +31,25 @@ export class CourseComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.courseId = this.route.snapshot.params["id"];
 
-    this.course$ = createHttpObservable(`/api/courses/${this.courseId}`);
+    const course$ = createHttpObservable(`/api/courses/${this.courseId}`);
+
+    const lessons$ = this.loadLessons();
+
+    forkJoin(course$, lessons$)
+      .pipe(
+        tap(([course, lesson]) => {
+          console.log("course", course);
+          console.log("lesson", lesson);
+        })
+      )
+
+      .subscribe();
   }
 
   ngAfterViewInit() {
-    const searchLesson$ = fromEvent<any>(
-      this.input.nativeElement,
-      "keyup"
-    ).pipe(
-      map((event) => event.target.value),
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap((search) => this.loadLessons(search))
-    );
-
-    const initLessons$ = this.loadLessons();
-
-    this.lessons$ = concat(initLessons$, searchLesson$);
+    fromEvent<any>(this.input.nativeElement, "keyup")
+      .pipe(map((event) => event.target.value))
+      .subscribe(console.log);
   }
 
   loadLessons(search: string = ""): Observable<LessonModel[]> {
