@@ -1,16 +1,3 @@
-1. Add structured headers for keyword targeting.
-2. Include descriptions for each section.
-3. Improve heading hierarchy (for both readability and indexing).
-4. Add relevant keywords like "RxJS", "Angular", "Observables", etc.
-5. Improve metadata for better discovery on GitHub and search engines.
-
----
-
-Here's your **SEO-optimized README.md** content:
-
----
-
-````md
 # 📘 RxJS In Practice — Angular RxJS Course Notes
 
 Welcome to the **RxJS In Practice** course repository!
@@ -29,7 +16,7 @@ This repo includes fully working Angular examples and a complete set of **RxJS o
 ```bash
 npm install -g @angular/cli
 ```
-````
+
 
 ### 📥 Clone the Repository
 
