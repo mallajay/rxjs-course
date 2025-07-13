@@ -17,7 +17,6 @@ This repo includes fully working Angular examples and a complete set of **RxJS o
 npm install -g @angular/cli
 ```
 
-
 ### 📥 Clone the Repository
 
 ```bash
@@ -93,3 +92,11 @@ Each note below explains a specific RxJS concept or operator with examples, marb
 ## 📩 Feedback & Contribution
 
 Feel free to submit issues, suggestions or improvements via [GitHub Issues](https://github.com/mallajay/rxjs-course/issues).
+
+---
+
+### 🙏 Credits
+
+This course and its inspiration were originally based on the excellent work by [Angular University - RxJS Course](https://github.com/angular-university/rxjs-course).
+
+---
